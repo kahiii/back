@@ -1,30 +1,41 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <button @click="test">test</button>
+  <div id="app" class="h-100">
+    <component :is="`layout-${contentLayoutType}`">
+      <router-view />
+    </component>
   </div>
 </template>
 
 <script>
-import auth from './services/auth/authService'
+import LayoutVertical from './layouts/vertical/LayoutVertical.vue'
 
 export default {
   name: 'App',
-  methods: {
-    test () {
-      auth.log()
+  components: {
+    LayoutVertical
+  },
+  computed: {
+    contentLayoutType () {
+      return this.$route.meta.layout
     }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<style lang="scss">
+html {
+  font-size: 14px;
+  height: 100%;
+  letter-spacing: 0.01rem;
+  body {
+    height: 100%;
+    background-color: #f8f8f8;
+    p {
+      line-height: 1.5rem;
+    }
+    a {
+    text-decoration: none;
+    }
+  }
 }
 </style>

@@ -1,0 +1,20 @@
+.badge {
+  font-size: 85%;
+  &.badge-pill {
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    border-radius: 10rem;
+  }
+  &.badge-light-success {
+    background-color: $success-background;
+    color: $success-color;
+  }
+  &.badge-light-warning {
+    background-color: $warning-background;
+    color: $warning-color;
+  }
+  &.badge-light-danger {
+    background-color: $danger-background;
+    color: $danger-color;
+  }
+}
