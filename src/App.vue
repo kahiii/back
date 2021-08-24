@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="h-100">
     <component :is="`layout-${contentLayoutType}`">
-      <router-view />
+      <router-view :key="$route.path"/>
     </component>
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     contentLayoutType () {
-      return this.$route.meta.layout
+      return this.$route.meta.layout || 'vertical'
     }
   }
 }
@@ -28,6 +28,7 @@ html {
   height: 100%;
   letter-spacing: 0.01rem;
   body {
+    font-family: "Montserrat", Helvetica, Arial, serif;
     height: 100%;
     background-color: #f8f8f8;
     p {
@@ -35,6 +36,9 @@ html {
     }
     a {
     text-decoration: none;
+    }
+    h2, .h2 {
+      font-size: 1.714rem;
     }
   }
 }

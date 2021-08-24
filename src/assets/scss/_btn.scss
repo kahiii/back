@@ -1,0 +1,11 @@
+.btn-row {
+  margin-top: 0.5rem !important;
+  .btn {
+    padding: 0.786rem 1.5rem;
+    border-radius: 0.358rem;
+    font-weight: 500;
+    &:first-child {
+      margin-right: 1rem;
+    }
+  }
+}

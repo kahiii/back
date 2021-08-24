@@ -1,6 +1,7 @@
 <template>
   <div class="app-content content">
     <TheNavbar />
+    <AppBreadcrumb />
     <div class="content-body">
       <slot />
     </div> 
@@ -8,10 +9,11 @@
 </template>
 
 <script>
+import AppBreadcrumb from './components/appBreadcrumb/AppBreadcrumb.vue'
 import TheNavbar from './components/navbar/TheNavbar.vue'
 
 export default {
-  components: { TheNavbar },
+  components: { TheNavbar, AppBreadcrumb },
 }
 </script>
 

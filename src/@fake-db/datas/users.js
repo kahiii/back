@@ -1,7 +1,7 @@
 export const users = [
   {
     id: 1,
-    fullName: 'Tristan Izambard',
+    fullname: 'Tristan Izambard',
     role: 'Président',
     username: 'Timz',
     contact: '07 81 40 37 06',
@@ -11,14 +11,14 @@ export const users = [
   },
   {
     id: 2,
-    fullName: 'Kenan Dufrene',
+    fullname: 'Kenan Dufrene',
     role: 'Vice-Président',
     username: 'Anebris',
     contact: '07 81 40 37 06',
     email: 'kenan.dufrene@live.fr',
     status: 'inactive',
     avatar: 'https://pixinvent.com/demo/vuexy-vuejs-admin-dashboard-template/demo-1/img/9.3fd39137.png',
-  }
+  }  
 ]
 
 export const userData = {

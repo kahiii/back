@@ -1,6 +1,6 @@
 <template>
   <li class="nav-item">
-    <b-link class="d-flex align-items-center" :href="item.route">
+    <b-link class="d-flex align-items-center" :to="item.route">
       <unicon 
         :name="item.icon || 'circle'"
         :class="{

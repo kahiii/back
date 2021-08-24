@@ -10,7 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
-    "bootstrap": "^5.0.2",
+    "bootstrap": "4.6.0",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "portal-vue": "^2.1.7",
@@ -18,8 +18,11 @@
     "sass-loader": "^10.2.0",
     "vee-validate": "^3.4.10",
     "vue": "^2.6.11",
+    "vue-flatpickr-component": "^8.1.6",
     "vue-perfect-scrollbar": "^0.2.1",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^3.5.2",
+    "vue-select": "^3.12.2",
     "vue-unicons": "^3.2.1",
     "vuex": "^3.4.0"
   },

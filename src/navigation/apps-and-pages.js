@@ -25,11 +25,11 @@ export default [
     children: [
       {
         title: 'Liste',
-        route: 'apps-invoice-list',
+        route: 'apps-users-list',
       },
       {
         title: 'Ajouter',
-        route: { name: 'apps-invoice-add' },
+        route: { name: 'apps-users-add' },
       },
     ],
   },

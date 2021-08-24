@@ -11,7 +11,21 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import './assets/scss/global.scss'
 
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
+
+import "vue-select/dist/vue-select.css"; // css
+import 'flatpickr/dist/flatpickr.css';
+
+import '@datas/db'
+
+import user from './plugins/users'
+import article from './plugins/articles'
+
 Vue.use(bootstrapVue)
+Vue.use(user)
+Vue.use(article)
 
 Vue.config.productionTip = false
 

@@ -38,7 +38,7 @@ export default {
   }
 
   &.floating-nav {
-    margin: 1.3rem 0;
+    margin: 0 0 1.3rem 0;
     border-radius: 0.428rem;
     .navbar-container {
       padding: 0.8rem 1rem;

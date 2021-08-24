@@ -54,7 +54,8 @@
 </template>
 
 <script>
-import { userData } from '@datas/users'
+import { userData } from '@datas/datas/users'
+
 export default {
   data() {
     return {

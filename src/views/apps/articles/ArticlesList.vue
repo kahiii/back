@@ -16,14 +16,14 @@
             md="6"
             class="d-flex align-items-center justify-content-start mb-1 mb-md-0"
           >
-            <label>Show</label>
+            <label>Voir</label>
             <v-select
               v-model="maxPerPage"
-              :options="perPageOptions"
+              :options="[10, 25]"
               :clearable="false"
-              class="per-page-selector d-inline-block mx-50"
+              class="per-page-selector d-inline-block mx-2"
             />
-            <label>entries</label>
+            <label>entrées</label>
           </b-col>
 
           <!-- Search -->
@@ -39,9 +39,9 @@
               />
               <b-button
                 variant="primary"
-                @click="isAddNewUserSidebarActive = true"
+                :to="{ name: 'apps-articles-create'}"
               >
-                <span class="text-nowrap">Add User</span>
+                <span class="text-nowrap">Ajouter un article</span>
               </b-button>
             </div>
           </b-col>
@@ -52,28 +52,22 @@
           ref="refUserListTable"
           class="position-relative"
           primary-key="id"
-          :fields="['utilisateur', 'email', 'role', 'status', 'actions' ]"
+          :fields="['titre', 'auteur', 'date de creation', 'status', 'actions' ]"
           :items="users"
         >
-          <!-- Column: User -->
-          <template #cell(utilisateur)="data">
-            <b-media vertical-align="center">
-              <template #aside>
-                <b-avatar
-                  size="32"
-                  :src="data.item.avatar"
-                  :text="avatarText(data.item.fullName)"
-                  :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-                />
-              </template>
-              <b-link
-                :to="{ name: 'apps-users-view', params: { id: data.item.id } }"
-                class="font-weight-bold d-block text-nowrap"
-              >
-                {{ data.item.fullName }}
-              </b-link>
-              <small class="text-muted">@{{ data.item.username }}</small>
-            </b-media>
+          <!-- Column: Titre -->
+          <template #cell(titre)="data">
+            <b-link
+              :to="{ name: 'apps-articles-edit', params: { id: data.item.id } }"
+              class="font-weight-bold d-block text-nowrap"
+            >
+              {{ data.item.title }}
+            </b-link>
+          </template>
+
+          <!-- Column: Auteur -->
+          <template #cell(auteur)="data">
+            {{ data.item.author.firstname }} {{ data.item.author.lastname }}
           </template>
 
           <!-- Column: Status -->
@@ -96,17 +90,11 @@
               <template #button-content>
                 <unicon name="ellipsis-v" width="16px" heigth="16px" class="align-middle text-body" />
               </template>
-              <b-dropdown-item :to="{ name: 'apps-users-view', params: { id: data.item.id } }">
-                <span class="align-middle ml-50">Details</span>
-              </b-dropdown-item>
 
-              <b-dropdown-item :to="{ name: 'apps-users-edit', params: { id: data.item.id } }">
-                <span class="align-middle ml-50">Edit</span>
+              <b-dropdown-item :to="{ name: 'apps-articles-edit', params: { id: data.item.id } }">
+                <span class="align-middle ml-50">Editer</span>
               </b-dropdown-item>
-
-              <b-dropdown-item>
-                <span class="align-middle ml-50">Delete</span>
-              </b-dropdown-item>
+              
             </b-dropdown>
           </template>
 
@@ -129,8 +117,14 @@
 </template>
 
 <script>
+import vSelect from 'vue-select'
+import globalRenderer from '../../../utils/globalRenderer'
 
 export default {
+  components: {
+    vSelect
+  },
+  mixins: [globalRenderer],
   data() {
     return {
       searchQuery: '',
@@ -153,23 +147,13 @@ export default {
   },
   methods: {
     fetchUsers() {
-      this.$user.getUsersList({
+      this.$article.getArticles({
         q: this.searchQuery,
       }).then(res => {
+        console.log(res)
         this.users = res
       })
     },
-    avatarText(value) {
-      if (!value) return ''
-      const nameArray = value.split(' ')
-      return nameArray.map(word => word.charAt(0).toUpperCase()).join('')
-    },
-    resolveUserStatusVariant(status) {
-      if (status === 'pending') return 'warning'
-      if (status === 'active') return 'success'
-      if (status === 'inactive') return 'danger'
-      return 'primary'
-    }
   },
   watch: {
     searchQuery: function() {
@@ -180,6 +164,9 @@ export default {
 </script>
 
 <style lang="scss">
+.per-page-selector {
+  width: 80px;
+}
 .table {
   color: #6e6b7b;
   th, td {

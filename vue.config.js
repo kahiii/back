@@ -10,6 +10,8 @@ module.exports = {
         '@views': path.resolve(__dirname, 'src/views'),
         '@navigation': path.resolve(__dirname, 'src/navigation'),
         '@datas': path.resolve(__dirname, 'src/@fake-db'),
+        '@axios': path.resolve(__dirname, 'src/libs/axios'),
+        '@services': path.resolve(__dirname, 'src/services'),
       },
     },
   },
