@@ -149,6 +149,8 @@ export default {
     fetchUsers() {
       this.$article.getArticles({
         q: this.searchQuery,
+        page: this.currentPage,
+        limit: this.maxPerPage
       }).then(res => {
         console.log(res)
         this.users = res
