@@ -16,7 +16,7 @@
     "portal-vue": "^2.1.7",
     "sass": "1.32",
     "sass-loader": "^10.2.0",
-    "vee-validate": "^3.4.10",
+    "vee-validate": "^3.4.11",
     "vue": "^2.6.11",
     "vue-flatpickr-component": "^8.1.6",
     "vue-perfect-scrollbar": "^0.2.1",

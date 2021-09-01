@@ -52,7 +52,7 @@
           ref="refUserListTable"
           class="position-relative"
           primary-key="id"
-          :fields="['titre', 'auteur', 'date de creation', 'status', 'actions' ]"
+          :fields="['titre', 'auteur', 'creation', 'status', 'actions' ]"
           :items="users"
         >
           <!-- Column: Titre -->
@@ -70,6 +70,11 @@
             {{ data.item.author.firstname }} {{ data.item.author.lastname }}
           </template>
 
+          <!-- Column: Status -->
+          <template #cell(creation)="data">
+            {{ data.item.createdAt }}
+          </template>
+          
           <!-- Column: Status -->
           <template #cell(status)="data">
             <b-badge

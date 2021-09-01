@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    qsdqsd
+    Bonjour !
   </div>
 </template>
 

@@ -8,11 +8,13 @@
 
 <script>
 import LayoutVertical from './layouts/vertical/LayoutVertical.vue'
+import LayoutFull from './layouts/full/LayoutFull.vue'
 
 export default {
   name: 'App',
   components: {
-    LayoutVertical
+    LayoutVertical,
+    LayoutFull
   },
   computed: {
     contentLayoutType () {
@@ -35,7 +37,9 @@ html {
       line-height: 1.5rem;
     }
     a {
-    text-decoration: none;
+      &:hover {
+        text-decoration: none;
+      }
     }
     h2, .h2 {
       font-size: 1.714rem;

@@ -6,6 +6,7 @@ import bootstrapVue from 'bootstrap-vue'
 
 //libs
 import './libs/vue-unicons'
+import './libs/vee-validate'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -16,7 +17,7 @@ import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
 
 import "vue-select/dist/vue-select.css"; // css
-import 'flatpickr/dist/flatpickr.css';
+import 'flatpickr/dist/flatpickr.css'; // css
 
 import '@datas/db'
 

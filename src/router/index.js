@@ -6,6 +6,8 @@ import authentication from './routes/authentication'
 import pages from './routes/pages'
 import apps from './routes/apps'
 
+import User from '@/services/users'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -23,4 +25,19 @@ const router = new VueRouter({
   ],
 })
 
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.guest) {
+      next()
+      return
+  }
+
+  try {
+      const { userProfile } = await User.getMe()
+      if (userProfile.active) {
+          next()
+      }
+  } catch (error) {
+      next({ name: 'login' })
+  }
+})
 export default router

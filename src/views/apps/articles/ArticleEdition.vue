@@ -14,8 +14,8 @@
           />
         </b-media-aside>
         <b-media-body>
-          <h6 class="mb-25">
-            {{ article.author.fullname }}
+          <h6 class="mb-25 text-capitalize">
+            {{ article.author.firstname }} {{ article.author.lastname }}
           </h6>
           <b-card-text>{{ article.createdAt }}</b-card-text>
         </b-media-body>
@@ -52,12 +52,12 @@
           <b-col cols="6">
             <b-form-group
               label="Url"
-              label-for="blog-slug"
+              label-for="blog-url"
               class="mb-4"
             >
               <b-form-input
-                id="blog-slug"
-                v-model="article.slug"
+                id="blog-url"
+                v-model="article.url"
                 disabled
               />
             </b-form-group>
@@ -71,7 +71,7 @@
               <v-select
                 id="blog-status"
                 v-model="article.status"
-                :options="['Draft', 'Pending', 'Published', 'Scheduled']"
+                :options="['draft', 'published']"
               />
             </b-form-group>
           </b-col>
@@ -126,12 +126,12 @@
                   <small class="text-muted">Required image resolution 800x400, image size 10mb.</small>
                   <b-card-text class="my-50">
                     <b-link id="blog-image-text">
-                      {{ article.picture ? article.picture : 'banner.jpg' }}
+                      
                     </b-link>
                   </b-card-text>
                   <div class="d-inline-block">
                     <b-form-file
-                      v-model="article.picture"
+                      v-model="fileToUpload"
                       accept=".jpg, .png"
                       placeholder="Choose file"
                       @input="inputImageRenderer"
@@ -179,12 +179,13 @@ export default {
   data() {
     return {
       article: {},
+      fileToUpload: [],
       currentMode: 'create'
     }
   },
   watch: {
     'article.title': function(title) {
-      this.article.slug = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replaceAll(' ', '-')
+      this.article.url = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replaceAll(' ', '-')
     }
   },
   created: function() {
@@ -195,16 +196,16 @@ export default {
   },
   methods: {
     async fetchArticle() {
-      this.article = await this.$article.getArticle({ id: parseInt(this.$route.params.id) })
+      this.article = await this.$article.getArticle(parseInt(this.$route.params.id))
     },
     saveArticle() {
-      this.currentMode === 'edit' ? this.$article.updateArticle(this.article) : this.$article.createArticle(this.article)
+      this.currentMode === 'edit' ? this.$article.updateArticle(this.article) : this.$article.createArticle({...this.article, author: { id: 1}})
     },
     cancelArticle() {
-      // revenir en arrière
+      this.$router.push({ name: 'apps-articles-list' })
     },
     inputImageRenderer() {
-      const file = this.article.picture
+      const file = this.fileToUpload
       const reader = new FileReader()
       
       reader.addEventListener(
@@ -213,6 +214,7 @@ export default {
           this.article.picture = reader.result
         }
       )
+
       if (file) {
         reader.readAsDataURL(file)
       } 

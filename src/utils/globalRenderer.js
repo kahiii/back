@@ -11,5 +11,18 @@ module.exports = {
 
       return 'primary'
     }
+  },
+  inputImageRenderer(file) {
+    const reader = new FileReader()
+    console.log('test')
+    reader.addEventListener(
+      'load',
+      () => {
+        this.article.picture = reader.result
+      }
+    )
+    if (file) {
+      reader.readAsDataURL(file)
+    } 
   }
 }

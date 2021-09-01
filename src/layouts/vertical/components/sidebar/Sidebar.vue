@@ -4,25 +4,7 @@
       <ul class="nav navbar-nav flex-row">
         <!-- Logo & Text -->
         <li class="nav-item mr-auto">
-          <b-link
-            class="navbar-brand"
-            to="/"
-          >
-            <span class="brand-logo mr-4">
-              <b-img
-                :src="require('@assets/img/logos/logo.png')"
-                alt="logo"
-              />
-            </span>
-            <div class="brand-name">
-              <h2 class="brand-text">
-                La Couleur
-              </h2>
-              <h2 class="brand-text">
-                Des Maux
-              </h2>
-            </div>
-          </b-link>
+          <Logo />
         </li>
       </ul>
     </div>
@@ -42,11 +24,13 @@
 import SidebarNavItems from './SidebarNavItems.vue'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import navMenuItems from '@navigation'
+import Logo from '@/components/globals/Logo.vue'
 
 export default {
   components: {
     VuePerfectScrollbar,
-    SidebarNavItems
+    SidebarNavItems,
+    Logo
   },
   data () {
     return {
@@ -81,26 +65,6 @@ export default {
     position: relative;
     padding: 0.35rem 1rem 0.3rem 1.64rem;
     height: 4.45rem;
-    .navbar-brand {
-      display: flex;
-      align-items: center;
-      .brand-logo img {
-        max-width: 45px;
-      }
-      .brand-name {
-        text-align: center;
-        .brand-text {
-          margin: 0;
-          color: #3e5ea9;
-          font-weight: 600;
-          letter-spacing: 0.01rem;
-          font-size: 1.3rem;
-          &:first-child {
-            color: #192b44
-          }
-        }
-      }
-    }
   }
   .main-menu-content {
     height: calc(100% - 4.45rem) !important;

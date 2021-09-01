@@ -2,24 +2,24 @@ import http from '@axios'
 
 class Article {
   http = http
-
   async getArticles(queryParams) {
-    const res = await http.get('http://localhost:9999/api/articles', {queryParams})
+    const { q = '', limit = 10, page = 1 } = queryParams
+    const res = await http.get(`http://localhost:9999/api/articles?q=${q}&limit=${limit}&page=${page}`)
     return res.data.articles
   }
 
-  async getArticle(queryParams) {
-    const res = await http.get('/apps/article/:id', {params: queryParams})
+  async getArticle(query) {
+    const res = await http.get(`http://localhost:9999/api/article/${query}`)
     return res.data.article
   }
 
-  async createArticle(queryParams) {
-    const res = await http.get('/apps/article/create', {params: queryParams})
+  async createArticle(...article) {
+    const res = await http.post('http://localhost:9999/api/article/create', ...article)
     return res.data.articles
   }
 
-  async updateArticle(queryParams) {
-    const res = await http.get('/apps/article/update/:id', {params: queryParams})
+  async updateArticle(...article) {
+    const res = await http.put('http://localhost:9999/api/article/update', ...article)
     return res.data.articles
   }
 }
