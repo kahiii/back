@@ -4,12 +4,12 @@ class User {
   http = http
 
   async signIn(...user) {
-    const res = await http.post('http://localhost:9999/api/user/signin', ...user)
+    const res = await http.post('https://couleurdesmauxv2.herokuapp.com/api/user/signin', ...user)
     return res.data
   }
 
   async getMe() {
-    const res = await http.get('http://localhost:9999/api/user/me')
+    const res = await http.get('https://couleurdesmauxv2.herokuapp.com/api/user/me')
     return res.data
   }
 
