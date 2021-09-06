@@ -14,25 +14,37 @@
           />
         </b-media-aside>
         <b-media-body>
-          <h6 class="mb-25 text-capitalize">
+          <h6 class="mb-1 text-capitalize text-muted">
             {{ article.author.firstname }} {{ article.author.lastname }}
           </h6>
-          <b-card-text>{{ article.createdAt }}</b-card-text>
+          <b-card-text class="text-muted">Créé le {{ moment(article.createdAt).format('DD/MM/YYYY') }}</b-card-text>
         </b-media-body>
       </b-media>
       <!-- Formulaire -->
-      <b-form class="mt-4">
+      <ValidationObserver
+        tag="b-form"
+        ref="articleForm"
+        #default="{invalid}"
+      >
         <b-row>
           <b-col cols="6">
             <b-form-group
               label="Titre"
               label-for="blog-title"
-              class="mb-4"
+              class="mb-4 required"
+            >
+            <ValidationProvider
+              #default="{ errors }"
+              name="title"
+              vid="title"
+              rules="required"
             >
               <b-form-input
                 id="blog-title"
                 v-model="article.title"
               />
+              <small class="text-danger">{{ errors[0] }}</small>
+            </ValidationProvider>
             </b-form-group>
           </b-col>
           <b-col cols="6">
@@ -46,6 +58,7 @@
                 v-model="article.categories"
                 multiple
                 :options="['Association', 'Interventions']"
+                disabled
               />
             </b-form-group>
           </b-col>
@@ -66,13 +79,25 @@
             <b-form-group
               label="Status"
               label-for="blog-status"
-              class="mb-4"
+              class="mb-4 required"
             >
-              <v-select
-                id="blog-status"
-                v-model="article.status"
-                :options="['draft', 'published']"
-              />
+              <ValidationProvider
+                #default="{ errors }"
+                name="status"
+                vid="status"
+                rules="required"
+              >
+                <v-select
+                  id="blog-status"
+                  
+                  v-model="article.status"
+                  label="text"
+                  :reduce="status => status.value"
+                  :options="listStatus"
+                  class="text-capitalize"
+                />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </b-form-group>
           </b-col>
           <b-col cols="3">
@@ -81,11 +106,11 @@
               label-for="scheduled-date"
             >
               <flat-pickr
-                v-model="this.article.publishedAt"
+                v-model="article.publishedAt"
                 class="form-control"
                 :config="{ enableTime: true, dateFormat: 'd-m-Y H:i'}"
                 placeholder="YYYY/MM/DD HH:mm"
-                :disabled="this.article.status !== 'Scheduled'"
+                :disabled="article.status !== 'Scheduled'"
               />
           </b-form-group>
           </b-col>
@@ -93,12 +118,20 @@
             <b-form-group
               label="Contenu"
               label-for="blog-content"
-              class="mb-4"
+              class="mb-4 required"
             >
-              <quill-editor
-                id="blog-content"
-                v-model="article.content"
-              />
+              <ValidationProvider
+                #default="{ errors }"
+                name="contenu"
+                vid="contenu"
+                rules="required"
+              >
+                <quill-editor
+                  id="blog-content"
+                  v-model="article.content"
+                />
+               <small class=" text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </b-form-group>
           </b-col>
           <b-col
@@ -148,29 +181,33 @@
             <b-button
               variant="primary"
               @click="saveArticle"
+              :disabled="invalid"
             >
-              Sauvegarder
+              {{ currentMode === 'edit' ? $t('btn.save') : $t('btn.create') }}
             </b-button>
             <b-button
               variant="outline-secondary"
               @click="cancelArticle"
             >
-              Annuler
+              {{ $t('btn.cancel') }}
             </b-button>
           </b-col>
         </b-row>
-      </b-form>
+      </ValidationObserver>
     </b-card>
   </div>
 </template>
 
 <script>
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import flatPickr from 'vue-flatpickr-component'
 import vSelect from 'vue-select'
 import { quillEditor } from 'vue-quill-editor'
 
 export default {
   components: {
+    ValidationObserver,
+    ValidationProvider,
     flatPickr,
     vSelect,
     quillEditor,
@@ -178,14 +215,22 @@ export default {
   },
   data() {
     return {
-      article: {},
+      article: {
+        picture: 'http://localhost:9999/img/articles/placeholder-image.jpg',
+      },
       fileToUpload: [],
-      currentMode: 'create'
+      currentMode: 'create',
+      listStatus: [
+        { value: 'draft', text: this.$t(`status.draft`) },
+        { value: 'published', text: this.$t(`status.published`) }
+      ]
     }
   },
   watch: {
     'article.title': function(title) {
-      this.article.url = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replaceAll(' ', '-')
+      if (this.currentMode !== 'edit') {
+        this.article.url = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replaceAll(' ', '-').replaceAll("'", '-')
+      }
     }
   },
   created: function() {
@@ -199,7 +244,32 @@ export default {
       this.article = await this.$article.getArticle(parseInt(this.$route.params.id))
     },
     saveArticle() {
-      this.currentMode === 'edit' ? this.$article.updateArticle(this.article) : this.$article.createArticle({...this.article, author: { id: 1}})
+      this.currentMode === 'edit' ? this.updateArticle() : this.createArticle()
+    },
+    updateArticle() {
+      this.$article.updateArticle( this.article.id, {
+        title: this.article.title,
+        content: this.article.content,
+        url: this.article.url,
+        status: this.article.status,
+        picture: this.article.picture,
+        author:  this.article.author.id
+      }).then(() => {
+        this.$toast.success("L'article à été sauvegarder")
+        this.fetchArticle()
+      }).catch(
+        this.$toast.error("Une erreur s'est produite")
+      )
+    },
+    createArticle() {
+      this.$article.createArticle({
+        title: this.article.title,
+        content: this.article.content,
+        url: this.article.url,
+        status: this.article.status,
+        picture: this.article.picture,
+        author: 1
+      })
     },
     cancelArticle() {
       this.$router.push({ name: 'apps-articles-list' })
@@ -207,17 +277,14 @@ export default {
     inputImageRenderer() {
       const file = this.fileToUpload
       const reader = new FileReader()
-      
-      reader.addEventListener(
-        'load',
-        () => {
-          this.article.picture = reader.result
-        }
-      )
+
+      reader.onload = e => {
+        this.article.picture = e.target.result
+      }
 
       if (file) {
         reader.readAsDataURL(file)
-      } 
+      }
     }
   }
 }
@@ -257,7 +324,7 @@ label {
   color: #6e6b7b;
 }
 // MOOVE //
-.flatpickr-input {
+.flatpickr-input, input {
   &[disabled] {
     cursor: not-allowed;
   }

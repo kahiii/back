@@ -18,8 +18,8 @@ class Article {
     return res.data.articles
   }
 
-  async updateArticle(...article) {
-    const res = await http.put('http://localhost:9999/api/article/update', ...article)
+  async updateArticle(id, article) {
+    const res = await http.put(`http://localhost:9999/api/article/update/${id}`, article)
     return res.data.articles
   }
 }

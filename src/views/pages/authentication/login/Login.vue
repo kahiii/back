@@ -40,20 +40,18 @@
           </b-card-text>
 
           <!-- form -->
-          <validation-observer
+          <ValidationObserver
+            tag="b-form"
             ref="loginForm"
             #default="{invalid}"
+            class="auth-login-form mt-2"
           >
-            <b-form
-              class="auth-login-form mt-2"
-              @submit.prevent="login"
-            >
               <!-- email -->
               <b-form-group
                 label="Email"
                 label-for="login-email"
               >
-                <validation-provider
+                <ValidationProvider
                   #default="{ errors }"
                   name="Email"
                   vid="email"
@@ -67,7 +65,7 @@
                     placeholder="john@example.com"
                   />
                   <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
+                </ValidationProvider>
               </b-form-group>
 
               <!-- password -->
@@ -78,7 +76,7 @@
                     <small>Mot de Passe oublié?</small>
                   </b-link>
                 </div>
-                <validation-provider
+                <ValidationProvider
                   #default="{ errors }"
                   name="Password"
                   vid="password"
@@ -99,7 +97,7 @@
                     />
                   </b-input-group>
                   <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
+                </ValidationProvider>
               </b-form-group>
 
               <!-- checkbox -->
@@ -122,15 +120,14 @@
               >
                 Connexion
               </b-button>
-            </b-form>
+          </ValidationObserver>
 
-            <b-card-text class="text-center mt-4">
-              <span>C'est une erreur? </span>
-              <b-link href="https://www.lacouleurdesmaux.fr">
-                <span>quitter</span>
-              </b-link>
-            </b-card-text>
-          </validation-observer>
+          <b-card-text class="text-center mt-4">
+            <span>C'est une erreur? </span>
+            <b-link href="https://www.lacouleurdesmaux.fr">
+              <span>quitter</span>
+            </b-link>
+          </b-card-text>
 
         </b-col>
       </b-col>

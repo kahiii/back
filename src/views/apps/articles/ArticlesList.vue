@@ -48,62 +48,59 @@
         </b-row>
 
       </div>
-        <b-table
-          ref="refUserListTable"
-          class="position-relative"
-          primary-key="id"
-          :fields="['titre', 'auteur', 'creation', 'status', 'actions' ]"
-          :items="users"
-        >
-          <!-- Column: Titre -->
-          <template #cell(titre)="data">
+      <b-table
+        striped
+        hover
+        responsive
+        class="position-relative"
+        primary-key="id"
+        :fields="['titre', 'auteur', 'creation', 'status', 'actions' ]"
+        :items="users"
+      >
+
+        <!-- Column: Titre -->
+        <template #cell(titre)="data">
+          <b-link
+            :to="{ name: 'apps-articles-edit', params: { id: data.item.id } }"
+            class="font-weight-bold d-block text-nowrap"
+          >
+            {{ data.item.title }}
+          </b-link>
+        </template>
+
+        <!-- Column: Auteur -->
+        <template #cell(auteur)="data">
+          <span class="text-capitalize">{{ data.item.author.firstname }} {{ data.item.author.lastname }}</span>
+        </template>
+
+        <!-- Column: Status -->
+        <template #cell(creation)="data">
+          {{ moment(data.item.createdAt).format('DD/MM/YYYY') }}
+        </template>
+        
+        <!-- Column: Status -->
+        <template #cell(status)="data">
+          <b-badge
+            pill
+            :variant="`light-${resolveUserStatusVariant(data.item.status)}`"
+            class="text-capitalize"
+          >
+            {{ $t(`status.${data.item.status}`) }}
+          </b-badge>
+        </template>
+
+        <!-- Column: Actions -->
+        <template #cell(actions)="data">
             <b-link
               :to="{ name: 'apps-articles-edit', params: { id: data.item.id } }"
-              class="font-weight-bold d-block text-nowrap"
+              v-b-tooltip.hover.bottom="'Editer'" 
+              class="mr-2"
             >
-              {{ data.item.title }}
+              <span class="align-middle"><unicon name="edit" width="16px" heigth="16px" class="align-middle text-body" /></span>
             </b-link>
-          </template>
+        </template>
 
-          <!-- Column: Auteur -->
-          <template #cell(auteur)="data">
-            {{ data.item.author.firstname }} {{ data.item.author.lastname }}
-          </template>
-
-          <!-- Column: Status -->
-          <template #cell(creation)="data">
-            {{ data.item.createdAt }}
-          </template>
-          
-          <!-- Column: Status -->
-          <template #cell(status)="data">
-            <b-badge
-              pill
-              :variant="`light-${resolveUserStatusVariant(data.item.status)}`"
-              class="text-capitalize"
-            >
-              {{ data.item.status }}
-            </b-badge>
-          </template>
-
-          <!-- Column: Actions -->
-          <template #cell(actions)="data">
-            <b-dropdown
-              variant="link"
-              no-caret
-            >
-              <template #button-content>
-                <unicon name="ellipsis-v" width="16px" heigth="16px" class="align-middle text-body" />
-              </template>
-
-              <b-dropdown-item :to="{ name: 'apps-articles-edit', params: { id: data.item.id } }">
-                <span class="align-middle ml-50">Editer</span>
-              </b-dropdown-item>
-              
-            </b-dropdown>
-          </template>
-
-        </b-table>
+      </b-table>
       <div class="mx-4 mb-4">
         <b-row>
 
@@ -157,7 +154,6 @@ export default {
         page: this.currentPage,
         limit: this.maxPerPage
       }).then(res => {
-        console.log(res)
         this.users = res
       })
     },
@@ -194,5 +190,4 @@ export default {
     align-items: flex-start;
   }
 }
-
 </style>

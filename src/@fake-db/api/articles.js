@@ -49,12 +49,3 @@ mock.onGet('/apps/article/:id').reply(config => {
   ]
 })
 
-mock.onGet('/apps/article/update').reply(config => {
-  console.log(config.params)
-  return [
-    200,
-    {
-      article: ''
-    }
-  ]
-})

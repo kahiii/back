@@ -1,0 +1,11 @@
+{
+  "status": {
+    "draft": "brouillon",
+    "published": "publié"
+  },
+  "btn": {
+    "create": "Créer",
+    "save": "Sauvegarder",
+    "cancel": "Annuler"
+  }
+}
