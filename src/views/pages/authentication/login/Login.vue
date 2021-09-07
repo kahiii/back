@@ -43,7 +43,7 @@
           <ValidationObserver
             tag="b-form"
             ref="loginForm"
-            #default="{invalid}"
+            #default="{invalid, errors}"
             class="auth-login-form mt-2"
           >
               <!-- email -->
@@ -64,7 +64,7 @@
                     name="login-email"
                     placeholder="john@example.com"
                   />
-                  <small class="text-danger">{{ errors[0] }}</small>
+                  <small class="text-danger">{{ errors[0]  }}</small>
                 </ValidationProvider>
               </b-form-group>
 
@@ -156,9 +156,12 @@ export default {
   },
   methods: {
     async handleConnect() {
+      console.log(process.env)
       await this.$user.signIn(this.user)
       .then(() => {
         this.$router.push({ name: '/'})
+      }).catch(() => {
+        this.$refs.loginForm.setErrors({ email: 'Email ou Mot de Passe incorrect'})
       })
     }
   }
