@@ -43,7 +43,7 @@
           <ValidationObserver
             tag="b-form"
             ref="loginForm"
-            #default="{invalid, errors}"
+            #default="{invalid}"
             class="auth-login-form mt-2"
           >
               <!-- email -->
