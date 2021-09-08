@@ -18,8 +18,10 @@ class Article {
     return res.data.articles
   }
 
-  async updateArticle(id, article) {
-    const res = await http.put(`${process.env.VUE_APP_BASE_API}/api/article/update/${id}`, article)
+  async updateArticle(id, ...article) {
+    const formData = new FormData()
+    formData.append('image', JSON.stringify(article.picture))
+    const res = await http.put(`${process.env.VUE_APP_BASE_API}/api/article/update/${id}`, ...article)
     return res.data.articles
   }
 }

@@ -2,30 +2,22 @@
   <div>
     <b-card class="blog-edit-wrapper">
       <!-- Author -->
-      <b-media
-        no-body
-        vertical-align="center"
-        v-if="article.author"
-      >
+      <b-media no-body vertical-align="center" v-if="article.author">
         <b-media-aside class="mr-75">
-          <b-avatar
-            size="38"
-            :src="article.author.avatar"
-          />
+          <b-avatar size="38" :src="article.author.avatar" />
         </b-media-aside>
         <b-media-body>
           <h6 class="mb-1 text-capitalize text-muted">
             {{ article.author.firstname }} {{ article.author.lastname }}
           </h6>
-          <b-card-text class="text-muted">Créé le {{ moment(article.createdAt).format('DD/MM/YYYY') }}</b-card-text>
+          <b-card-text class="text-muted"
+            >Créé le
+            {{ moment(article.createdAt).format("DD/MM/YYYY") }}</b-card-text
+          >
         </b-media-body>
       </b-media>
       <!-- Formulaire -->
-      <ValidationObserver
-        tag="b-form"
-        ref="articleForm"
-        #default="{invalid}"
-      >
+      <ValidationObserver tag="b-form" ref="articleForm" #default="{ invalid }">
         <b-row>
           <b-col cols="6">
             <b-form-group
@@ -33,18 +25,15 @@
               label-for="blog-title"
               class="mb-4 required"
             >
-            <ValidationProvider
-              #default="{ errors }"
-              name="title"
-              vid="title"
-              rules="required"
-            >
-              <b-form-input
-                id="blog-title"
-                v-model="article.title"
-              />
-              <small class="text-danger">{{ errors[0] }}</small>
-            </ValidationProvider>
+              <ValidationProvider
+                #default="{ errors }"
+                name="title"
+                vid="title"
+                rules="required"
+              >
+                <b-form-input id="blog-title" v-model="article.title" />
+                <small class="text-danger">{{ errors[0] }}</small>
+              </ValidationProvider>
             </b-form-group>
           </b-col>
           <b-col cols="6">
@@ -63,16 +52,8 @@
             </b-form-group>
           </b-col>
           <b-col cols="6">
-            <b-form-group
-              label="Url"
-              label-for="blog-url"
-              class="mb-4"
-            >
-              <b-form-input
-                id="blog-url"
-                v-model="article.url"
-                disabled
-              />
+            <b-form-group label="Url" label-for="blog-url" class="mb-4">
+              <b-form-input id="blog-url" v-model="article.url" disabled />
             </b-form-group>
           </b-col>
           <b-col cols="3">
@@ -89,10 +70,9 @@
               >
                 <v-select
                   id="blog-status"
-                  
                   v-model="article.status"
                   label="text"
-                  :reduce="status => status.value"
+                  :reduce="(status) => status.value"
                   :options="listStatus"
                   class="text-capitalize"
                 />
@@ -108,11 +88,11 @@
               <flat-pickr
                 v-model="article.publishedAt"
                 class="form-control"
-                :config="{ enableTime: true, dateFormat: 'd-m-Y H:i'}"
+                :config="{ enableTime: true, dateFormat: 'd-m-Y H:i' }"
                 placeholder="YYYY/MM/DD HH:mm"
                 :disabled="article.status !== 'Scheduled'"
               />
-          </b-form-group>
+            </b-form-group>
           </b-col>
           <b-col cols="12">
             <b-form-group
@@ -126,139 +106,149 @@
                 vid="contenu"
                 rules="required"
               >
-                <quill-editor
-                  id="blog-content"
-                  v-model="article.content"
-                />
-               <small class=" text-danger">{{ errors[0] }}</small>
+                <quill-editor id="blog-content" v-model="article.content" />
+                <small class="text-danger">{{ errors[0] }}</small>
               </ValidationProvider>
             </b-form-group>
           </b-col>
-          <b-col
-            cols="12"
-            class="mb-4"
-          >
+          <b-col cols="12" class="mb-4">
             <div class="border rounded p-4">
-              <h4 class="mb-3">
-                Image de présentation
-              </h4>
+              <h4 class="mb-3">Image de présentation</h4>
               <b-media
                 no-body
                 vertical-align="center"
                 class="flex-column flex-md-row"
               >
-               <b-media-aside>
+                <b-media-aside>
                   <b-img
                     :src="article.picture"
                     height="110"
                     width="170"
                     class="rounded mr-2 mb-1 mb-md-0"
-                  /> 
+                  />
                 </b-media-aside>
                 <b-media-body>
-                  <small class="text-muted">Required image resolution 800x400, image size 10mb.</small>
+                  <small class="text-muted"
+                    >Required image resolution 800x400, image size 10mb.</small
+                  >
                   <b-card-text class="my-50">
-                    <b-link id="blog-image-text">
-                      
-                    </b-link>
+                    <b-link id="blog-image-text"> </b-link>
                   </b-card-text>
-                  <div class="d-inline-block">
-                    <b-form-file
-                      v-model="fileToUpload"
-                      accept=".jpg, .png"
-                      placeholder="Choose file"
-                      @input="inputImageRenderer"
-                    />
-                  </div>
                 </b-media-body>
               </b-media>
             </div>
           </b-col>
-          <b-col
-            cols="12"
-            class="btn-row"
-          >
+          <b-col cols="12" class="btn-row">
             <b-button
               variant="primary"
               @click="saveArticle"
               :disabled="invalid"
             >
-              {{ currentMode === 'edit' ? $t('btn.save') : $t('btn.create') }}
+              {{ currentMode === "edit" ? $t("btn.save") : $t("btn.create") }}
             </b-button>
-            <b-button
-              variant="outline-secondary"
-              @click="cancelArticle"
-            >
-              {{ $t('btn.cancel') }}
+            <b-button variant="outline-secondary" @click="cancelArticle">
+              {{ $t("btn.cancel") }}
             </b-button>
           </b-col>
         </b-row>
       </ValidationObserver>
+                          <input
+                      type="file"
+                      name="qsd"
+                      id="qsd"
+                      @input="inputImageRenderer"
+                    />
+                    <button @click="test">s</button>
     </b-card>
   </div>
 </template>
 
 <script>
-import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import flatPickr from 'vue-flatpickr-component'
-import vSelect from 'vue-select'
-import { quillEditor } from 'vue-quill-editor'
+import { ValidationObserver, ValidationProvider } from "vee-validate";
+import { quillEditor } from "vue-quill-editor";
+import axios from '@axios'
 
 export default {
   components: {
     ValidationObserver,
     ValidationProvider,
-    flatPickr,
-    vSelect,
+    flatPickr: () => import("vue-flatpickr-component"),
+    vSelect: () => import("vue-select"),
     quillEditor,
-    
   },
   data() {
     return {
       article: {
-        picture: 'http://localhost:9999/img/articles/placeholder-image.jpg',
+        picture: "http://localhost:9999/img/articles/placeholder-image.jpg",
       },
       fileToUpload: [],
-      currentMode: 'create',
+      currentMode: "create",
       listStatus: [
-        { value: 'draft', text: this.$t(`status.draft`) },
-        { value: 'published', text: this.$t(`status.published`) }
-      ]
-    }
+        { value: "draft", text: this.$t(`status.draft`) },
+        { value: "published", text: this.$t(`status.published`) },
+      ],
+    };
   },
   watch: {
-    'article.title': function(title) {
-      if (this.currentMode !== 'edit') {
-        this.article.url = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replaceAll(' ', '-').replaceAll("'", '-')
+    "article.title": function (title) {
+      if (this.currentMode !== "edit") {
+        this.article.url = title
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toLowerCase()
+          .replaceAll(" ", "-")
+          .replaceAll("'", "-");
       }
-    }
+    },
   },
-  created: function() {
-    if (this.$route.name === 'apps-articles-edit') {
-      this.currentMode = 'edit'
-      this.fetchArticle()
+  created: function () {
+    if (this.$route.name === "apps-articles-edit") {
+      this.currentMode = "edit";
+      this.fetchArticle();
     }
   },
   methods: {
     async fetchArticle() {
-      this.article = await this.$article.getArticle(parseInt(this.$route.params.id))
+      this.article = await this.$article.getArticle(
+        parseInt(this.$route.params.id)
+      );
     },
     saveArticle() {
-      this.currentMode === 'edit' ? this.updateArticle() : this.createArticle()
+      this.currentMode === "edit" ? this.updateArticle() : this.createArticle();
     },
     updateArticle() {
-      this.$article.updateArticle( this.article.id, {
-        title: this.article.title,
-        content: this.article.content,
-        url: this.article.url,
-        status: this.article.status,
-        picture: this.article.picture,
-        author:  this.article.author.id
-      }).then(() => {
-        this.$toast.success("L'article à été sauvegarder")
-        this.fetchArticle()
-      }).catch(
-        this.$toast.error("Une erreur s'est produite")
+      console.log("updateArticle", this.fileToUpload);
+      this.$article
+        .updateArticle(this.article.id, {
+          title: this.article.title,
+          content: this.article.content,
+          url: this.article.url,
+          status: this.article.status,
+          picture: this.fileToUpload,
+          author: this.article.author.id,
+        })
+        .then(() => {
+          this.$toast.success("L'article à été sauvegarder");
+          this.fetchArticle();
+        })
+        .catch(this.$toast.error("Une erreur s'est produite"));
+    },
+    async test() {
+      const input = document.getElementById("qsd");
+      console.log(input)
+      const formData = new FormData()
+      formData.append("image", input.files[0], 'f1')
+      formData.append("image", input.files[0], 'f2')
+      formData.append("image", input.files[0], 'f1')
+      formData.append("miniature", input.files[0], 'f1')
+      formData.append("miniature", input.files[0], 'f2')
+      await axios.post(
+        `http://localhost:9999/test`,
+        formData, {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        }
       )
     },
     createArticle() {
@@ -268,14 +258,17 @@ export default {
         url: this.article.url,
         status: this.article.status,
         picture: this.article.picture,
-        author: 1
-      })
+        author: 1,
+      });
     },
     cancelArticle() {
-      this.$router.push({ name: 'apps-articles-list' })
+      this.$router.push({ name: "apps-articles-list" })
     },
-    inputImageRenderer() {
-      const file = this.fileToUpload
+    inputImageRenderer(e) {
+      console.log("e", e);
+      return;
+      /*      const file = this.fileToUpload
+      console.log('inputImageRenderer', this.fileToUpload)
       const reader = new FileReader()
 
       reader.onload = e => {
@@ -284,10 +277,10 @@ export default {
 
       if (file) {
         reader.readAsDataURL(file)
-      }
-    }
-  }
-}
+      }*/
+    },
+  },
+};
 </script>
 
 <style lang="scss">
@@ -300,13 +293,13 @@ export default {
 }
 // MOOVE //
 .form-control {
-    height: 2.714rem;
-    color: #6e6b7b;
-    padding: 0.438rem 1rem;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #d8d6de;
-    border-radius: 0.357rem;
+  height: 2.714rem;
+  color: #6e6b7b;
+  padding: 0.438rem 1rem;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #d8d6de;
+  border-radius: 0.357rem;
 }
 // MOOVE //
 label {
@@ -315,8 +308,8 @@ label {
 }
 // MOOVE //
 .media {
-    display: flex;
-    align-items: flex-start;
+  display: flex;
+  align-items: flex-start;
 }
 // MOOVE //
 .ql-editor {
@@ -324,7 +317,8 @@ label {
   color: #6e6b7b;
 }
 // MOOVE //
-.flatpickr-input, input {
+.flatpickr-input,
+input {
   &[disabled] {
     cursor: not-allowed;
   }

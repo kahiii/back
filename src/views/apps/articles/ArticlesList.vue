@@ -119,12 +119,11 @@
 </template>
 
 <script>
-import vSelect from 'vue-select'
 import globalRenderer from '../../../utils/globalRenderer'
 
 export default {
   components: {
-    vSelect
+    vSelect: () => import('vue-select'),
   },
   mixins: [globalRenderer],
   data() {
