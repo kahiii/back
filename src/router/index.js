@@ -22,7 +22,15 @@ const router = new VueRouter({
     ...authentication,
     ...dashboard,
     ...articles,
-    { path: '*', redirect: { name: 'dashboard' } }, // TODO : Error-404
+    {
+      path: '/error-404',
+      name: 'error-404',
+      component: () => import('@/views/errors/Error404.vue'),
+      meta: {
+        guest: true
+      }
+    },
+    { path: '*', redirect: { name: 'error-404' } }, // TODO : Error-404
   ],
 })
 

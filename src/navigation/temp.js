@@ -1,7 +1,7 @@
 export default [
   {
     title: 'Articles',
-    icon: 'user',
+    icon: 'file-question-alt',
     children: [
       {
         title: 'Liste des articles',
