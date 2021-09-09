@@ -24,13 +24,13 @@ const router = new VueRouter({
     ...articles,
     {
       path: '/error-404',
-      name: 'error404',
-      component: () => import('@/views/errors/Error404.vue'),
+      name: '404',
+      component: () => import('@/views/errors/404.vue'),
       meta: {
         guest: true
       }
     },
-    { path: '*', redirect: { name: 'error404' } },
+    { path: '*', redirect: { name: '404' } },
   ],
 })
 
