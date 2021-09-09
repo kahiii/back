@@ -75,7 +75,7 @@
 
         <!-- Column: Status -->
         <template #cell(creation)="data">
-          {{ moment(data.item.createdAt).format('DD/MM/YYYY') }}
+          {{ $moment(data.item.createdAt).format('DD/MM/YYYY') }}
         </template>
         
         <!-- Column: Status -->

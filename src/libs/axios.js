@@ -30,25 +30,5 @@ http.interceptors.response.use(
     return response
   }
 )
-/* http.interceptors.response.use(
-  response => response,
-  error => {
-    const { config, response } = error
-    const originalRequest = config
 
-    if (response && response.status === 401) {
-      User.signIn({
-        email: 'kenan.dufrene@live.fr',
-        password: 'test'
-      }).then(res => localStorage.setItem('jwt', res.accessToken))
-    }
-    const retryOriginalRequest = new Promise(resolve => {
-        // Make sure to assign accessToken according to your response.
-        // Check: https://pixinvent.ticksy.com/ticket/2413870
-        // Change Authorization header
-        resolve(http(originalRequest))
-    })
-    return retryOriginalRequest
-  }
-) */
 export default http

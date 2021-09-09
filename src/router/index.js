@@ -3,8 +3,9 @@ import VueRouter from 'vue-router'
 
 // Routes
 import authentication from './routes/authentication'
-import pages from './routes/pages'
-import apps from './routes/apps'
+import dashboard from './routes/dashboard'
+import articles from './routes/articles'
+/*import apps from './routes/apps' */
 
 import User from '@/services/users'
 
@@ -19,25 +20,20 @@ const router = new VueRouter({
   routes: [
     { path: '/', redirect: { name: 'dashboard' } },
     ...authentication,
-    ...pages,
-    ...apps,
-    { path: '*', redirect: 'error-404' },
+    ...dashboard,
+    ...articles,
+    { path: '*', redirect: { name: 'dashboard' } }, // TODO : Error-404
   ],
 })
 
 router.beforeEach(async (to, from, next) => {
-  if (to.meta.guest) {
-      next()
-      return
-  }
-
-  try {
-      const { userProfile } = await User.getMe()
-      if (userProfile.active) {
-          next()
-      }
-  } catch (error) {
-      next({ name: 'login' })
+  if (!to.meta.guest) {
+    await User.getMe()
+      .then(() => next())
+      .catch(() => next({ name: 'login' }))
+  } else {
+    next()
   }
 })
+
 export default router

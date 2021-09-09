@@ -1,7 +1,11 @@
+@import './libs/bootstrap-vue.scss';
+@import './libs/quill-editor.scss';
+@import './libs/vue-select.scss';
+@import './libs/flatpickr.scss';
+
 @import 'variables.scss';
 @import 'badges.scss';
 @import 'btn.scss';
-
 
 
 .form-group.required label:after {

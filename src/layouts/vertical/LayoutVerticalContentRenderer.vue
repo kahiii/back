@@ -3,7 +3,7 @@
     <TheNavbar />
     <AppBreadcrumb />
     <div class="content-body">
-      <slot />
+      <router-view />
     </div> 
   </div>
 </template>

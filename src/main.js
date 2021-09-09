@@ -4,29 +4,19 @@ import store from './store'
 import router from './router'
 import bootstrapVue from 'bootstrap-vue'
 
-//libs
+// libs
 import './libs/vue-unicons'
 import './libs/vee-validate'
 import './libs/toastification'
+import './libs/moment'
 import i18n from './libs/i18n/index'
 
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+// css
 import './assets/scss/global.scss'
 
-import 'quill/dist/quill.core.css' // import styles
-import 'quill/dist/quill.snow.css' // for snow theme
-import 'quill/dist/quill.bubble.css' // for bubble theme
+// import '@datas/db'
 
-import "vue-select/dist/vue-select.css"; // css
-import 'flatpickr/dist/flatpickr.css'; // css
-
-import moment from 'moment'
-
-Vue.prototype.moment = moment
-
-import '@datas/db'
-
+// plugins
 import user from './plugins/users'
 import article from './plugins/articles'
 

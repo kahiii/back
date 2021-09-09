@@ -1,25 +1,19 @@
 <template>
   <div id="app" class="h-100">
-    <component :is="`layout-${contentLayoutType}`">
-      <router-view :key="$route.path"/>
-    </component>
+    <router-view />
   </div>
 </template>
 
 <script>
-import LayoutVertical from './layouts/vertical/LayoutVertical.vue'
-import LayoutFull from './layouts/full/LayoutFull.vue'
+
 
 export default {
   name: 'App',
   components: {
-    LayoutVertical,
-    LayoutFull
+
   },
   computed: {
-    contentLayoutType () {
-      return this.$route.meta.layout || 'vertical'
-    }
+
   }
 }
 </script>

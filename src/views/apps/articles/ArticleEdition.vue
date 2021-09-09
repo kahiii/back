@@ -17,7 +17,7 @@
           <h6 class="mb-1 text-capitalize text-muted">
             {{ article.author.firstname }} {{ article.author.lastname }}
           </h6>
-          <b-card-text class="text-muted">Créé le {{ moment(article.createdAt).format('DD/MM/YYYY') }}</b-card-text>
+          <b-card-text class="text-muted">Créé le {{ $moment(article.createdAt).format('DD/MM/YYYY') }}</b-card-text>
         </b-media-body>
       </b-media>
       <!-- Formulaire -->
