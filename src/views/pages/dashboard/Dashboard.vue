@@ -1,5 +1,12 @@
 <template>
-  <div class="">
+  <!-- <section id="dashboard-analytics">
+    <b-row class="match-height">
+      <b-col lg="6" md="12">
+        <DashboardHello />
+      </b-col>
+    </b-row>
+  </section> -->
+  <div>
     Bonjour !
   </div>
 </template>
@@ -7,7 +14,9 @@
 <script>
 
 export default {
-
+  components: {
+    // DashboardHello: () => import('./DashboardHello.vue')
+  }
 }
 </script>
 

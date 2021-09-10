@@ -3,10 +3,10 @@
     <Logo />
     <div class="misc-inner p-2 p-sm-3">
       <div class="w-100 text-center">
-        <h2 class="mb-1">
-          Page introuvable 🕵🏻‍♀️
+        <h2 class="mb-4">
+          Page Introuvable 🕵🏻‍♀️
         </h2>
-        <p class="mb-2">
+        <p class="mb-4">
           Oops! 😖 La page que vous recherchez n'existe pas...
         </p>
         <b-button
@@ -46,6 +46,20 @@ export default {
   .misc-inner {
     position: relative;
     max-width: 750px;
+    h2 {
+      font-family: inherit;
+      font-weight: 500;
+      line-height: 1.2;
+      color: #5e5873;
+    }
+    p {
+      color: #6e6b7b;
+    }
+    .btn {
+      padding: 0.786rem 1.5rem;
+      border-radius: 0.358rem;
+      font-weight: 500;
+    }
   }
 }
 </style>
